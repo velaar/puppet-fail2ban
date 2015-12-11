@@ -11,143 +11,143 @@ backend  = <%= scope.lookupvar('fail2ban::backend') %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "sshd" %> 
 [sshd]
 enabled = true 
-<% end %> 
 
+<% end %> 
 <% if scope.lookupvar('fail2ban::array_jails').include? "sshd-ddos" %>
 [sshd-ddos]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "dropbear" %>
 [dropbear]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "selinux-ssh" %>
 [selinux-ssh]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "apache-auth" %>
 [apache-auth]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "apache-badbots" %>
 [apache-badbots]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "apache-noscript" %>
 [apache-noscript]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "apache-overflows" %>
 [apache-overflows]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "apache-nohome" %>
 [apache-nohome]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "apache-botsearch" %>
 [apache-botsearch]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "apache-fakegooglebot" %>
 [apache-fakegooglebot]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "apache-modsecurity" %>
 [apache-modsecurity]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "apache-shellshock" %>
 [apache-shellshock]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "nginx-http-auth" %>
 [nginx-http-auth]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "nginx-botsearch" %>
 [nginx-botsearch]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "php-url-fopen" %>
 [php-url-fopen]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "suhosin" %>
 [suhosin]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "lighttpd-auth" %>
 [lighttpd-auth]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "roundcube-auth" %>
 [roundcube-auth]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "openwebmail" %>
 [openwebmail]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "horde" %>
 [horde]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "groupoffice" %>
 [groupoffice]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "sogo-auth" %>
 [sogo-auth]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "drupal-auth" %>
 [drupal-auth]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "guacamole" %>
 [guacamole]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "monit" %>
 [monit]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "webmin-auth" %>
 [webmin-auth]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "froxlor-auth" %>
 [froxlor-auth]
 enabled = true
-<% end %>
 
+<% end %>
 <% if scope.lookupvar('fail2ban::array_jails').include? "squid" %>
 [squid]
 enabled = true
