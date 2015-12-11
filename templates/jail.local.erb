@@ -26,8 +26,13 @@ action   = iptables[name=POP3, port=pop3, protocol=tcp]
 logpath  = /var/log/maillog
 maxretry = 5
 
+[sshd]
+enabled  = <%= scope.lookupvar('fail2ban::array_jails').include? "sshd" %>
+port    = ssh
+logpath = %(sshd_log)s
+
 [ssh-iptables]
-enabled  = <%= scope.lookupvar('fail2ban::array_jails').include? "ssh" %>
+enabled  = <%= scope.lookupvar('fail2ban::array_jails').include? "ssh-iptables" %>
 filter   = sshd
 action   = iptables[name=SSH, port=ssh, protocol=tcp]
 <% unless scope.lookupvar('fail2ban::mailto').empty? -%>
