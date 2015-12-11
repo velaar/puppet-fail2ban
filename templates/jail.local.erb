@@ -1,57 +1,360 @@
 # This file is managed by Puppet. DO NOT EDIT.
+
 [DEFAULT]
+enabled = true
 ignoreip = <%= scope.lookupvar('fail2ban::ignoreip') %>
 bantime  = <%= scope.lookupvar('fail2ban::bantime') %>
 findtime = <%= scope.lookupvar('fail2ban::findtime') %>
 maxretry = <%= scope.lookupvar('fail2ban::maxretry') %>
 backend  = <%= scope.lookupvar('fail2ban::backend') %>
 
-[imap-iptables]
-enabled  = <%= scope.lookupvar('fail2ban::array_jails').include? "imap" %>
-filter   = dovecot
-action   = iptables[name=IMAP, port=imap, protocol=tcp]
-<% unless scope.lookupvar('fail2ban::mailto').empty? -%>
-           sendmail-whois[name=POP3, dest=<%= scope.lookupvar('fail2ban::mailto') %>, sender=fail2ban@<%= @fqdn %>]
-<% end -%>
-logpath  = /var/log/maillog
-maxretry = 5
-
-[pop3-iptables]
-enabled  = <%= scope.lookupvar('fail2ban::array_jails').include? "pop3" %>
-filter   = mail
-action   = iptables[name=POP3, port=pop3, protocol=tcp]
-<% unless scope.lookupvar('fail2ban::mailto').empty? -%>
-           sendmail-whois[name=POP3, dest=<%= scope.lookupvar('fail2ban::mailto') %>, sender=fail2ban@<%= @fqdn %>]
-<% end -%>
-logpath  = /var/log/maillog
-maxretry = 5
-
+<% if scope.lookupvar('fail2ban::array_jails').include? "sshd" %> 
 [sshd]
-enabled  = <%= scope.lookupvar('fail2ban::array_jails').include? "sshd" %>
-port    = ssh
-logpath = %(sshd_log)s
+enabled = true 
+<% end %> 
 
-[ssh-iptables]
-enabled  = <%= scope.lookupvar('fail2ban::array_jails').include? "ssh-iptables" %>
-filter   = sshd
-action   = iptables[name=SSH, port=ssh, protocol=tcp]
-<% unless scope.lookupvar('fail2ban::mailto').empty? -%>
-           sendmail-whois[name=SSH, dest=<%= scope.lookupvar('fail2ban::mailto') %>, sender=fail2ban@<%= @fqdn %>]
-<% end -%>
-<% if @operatingsystem == "Debian" -%>
-logpath  = /var/log/auth.log
-<% else -%>
-logpath  = /var/log/secure
-<% end -%>
-maxretry = 5
+<% if scope.lookupvar('fail2ban::array_jails').include? "sshd-ddos" %>
+[sshd-ddos]
+enabled = true
+<% end %>
 
-[vsftpd-iptables]
-enabled  = <%= scope.lookupvar('fail2ban::array_jails').include? "vsftpd" %>
-filter   = vsftpd
-action   = iptables[name=VSFTPD, port=ftp, protocol=tcp]
-<% unless scope.lookupvar('fail2ban::mailto').empty? -%>
-           sendmail-whois[name=VSFTPD, dest=<%= scope.lookupvar('fail2ban::mailto') %>, sender=fail2ban@<%= @fqdn %>]
-<% end -%>
-logpath  = /var/log/vsftpd.log
-maxretry = 5
-bantime  = 1800
+<% if scope.lookupvar('fail2ban::array_jails').include? "dropbear" %>
+[dropbear]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "selinux-ssh" %>
+[selinux-ssh]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "apache-auth" %>
+[apache-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "apache-badbots" %>
+[apache-badbots]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "apache-noscript" %>
+[apache-noscript]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "apache-overflows" %>
+[apache-overflows]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "apache-nohome" %>
+[apache-nohome]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "apache-botsearch" %>
+[apache-botsearch]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "apache-fakegooglebot" %>
+[apache-fakegooglebot]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "apache-modsecurity" %>
+[apache-modsecurity]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "apache-shellshock" %>
+[apache-shellshock]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "nginx-http-auth" %>
+[nginx-http-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "nginx-botsearch" %>
+[nginx-botsearch]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "php-url-fopen" %>
+[php-url-fopen]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "suhosin" %>
+[suhosin]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "lighttpd-auth" %>
+[lighttpd-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "roundcube-auth" %>
+[roundcube-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "openwebmail" %>
+[openwebmail]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "horde" %>
+[horde]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "groupoffice" %>
+[groupoffice]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "sogo-auth" %>
+[sogo-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "drupal-auth" %>
+[drupal-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "guacamole" %>
+[guacamole]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "monit" %>
+[monit]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "webmin-auth" %>
+[webmin-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "froxlor-auth" %>
+[froxlor-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "squid" %>
+[squid]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "3proxy" %>
+[3proxy]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "proftpd" %>
+[proftpd]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "pure-ftpd" %>
+[pure-ftpd]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "gssftpd" %>
+[gssftpd]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "wuftpd" %>
+[wuftpd]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "vsftpd" %>
+[vsftpd]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "assp" %>
+[assp]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "courier-smtp" %>
+[courier-smtp]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "postfix" %>
+[postfix]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "postfix-rbl" %>
+[postfix-rbl]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "sendmail-auth" %>
+[sendmail-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "sendmail-reject" %>
+[sendmail-reject]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "qmail-rbl" %>
+[qmail-rbl]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "dovecot" %>
+[dovecot]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "sieve" %>
+[sieve]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "solid-pop3d" %>
+[solid-pop3d]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "exim" %>
+[exim]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "exim-spam" %>
+[exim-spam]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "kerio" %>
+[kerio]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "courier-auth" %>
+[courier-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "postfix-sasl" %>
+[postfix-sasl]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "perdition" %>
+[perdition]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "squirrelmail" %>
+[squirrelmail]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "cyrus-imap" %>
+[cyrus-imap]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "uwimap-auth" %>
+[uwimap-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "named-refused" %>
+[named-refused]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "nsd" %>
+[nsd]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "asterisk" %>
+[asterisk]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "freeswitch" %>
+[freeswitch]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "mysqld-auth" %>
+[mysqld-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "recidive" %>
+[recidive]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "pam-generic" %>
+[pam-generic]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "xinetd-fail" %>
+[xinetd-fail]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "stunnel" %>
+[stunnel]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "ejabberd-auth" %>
+[ejabberd-auth]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "counter-strike" %>
+[counter-strike]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "nagios" %>
+[nagios]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "oracleims" %>
+[oracleims]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "directadmin" %>
+[directadmin]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "portsentry" %>
+[portsentry]
+enabled = true
+<% end %>
+
+<% if scope.lookupvar('fail2ban::array_jails').include? "pass2allow-ftp" %>
+[pass2allow-ftp]
+enabled = true
+<% end %>
+
